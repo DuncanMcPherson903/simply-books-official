@@ -5,14 +5,14 @@ import PropTypes from 'prop-types';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Link from 'next/link';
-import deleteAuthor from '../api/authorData';
+import { deleteSingleAuthor } from '../api/authorData';
 
 function AuthorCard({ authorObj, onUpdate }) {
-  // FOR DELETE, WE NEED TO REMOVE THE BOOK AND HAVE THE VIEW RERENDER,
-  // SO WE PASS THE FUNCTION FROM THE PARENT THAT GETS THE BOOKS
+  // FOR DELETE, WE NEED TO REMOVE THE AUTHOR AND HAVE THE VIEW RERENDER,
+  // SO WE PASS THE FUNCTION FROM THE PARENT THAT GETS THE AUTHORS
   const deleteThisAuthor = () => {
-    if (window.confirm(`Delete ${authorObj.title}?`)) {
-      deleteAuthor(authorObj.firebaseKey).then(() => onUpdate());
+    if (window.confirm(`Delete ${authorObj.first_name} ${authorObj.last_name}?`)) {
+      deleteSingleAuthor(authorObj.firebaseKey).then(() => onUpdate());
     }
   };
 
@@ -31,7 +31,7 @@ function AuthorCard({ authorObj, onUpdate }) {
             </span>
           )}
         </p>
-        {/* DYNAMIC LINK TO VIEW THE AUTHOT DETAILS  */}
+        {/* DYNAMIC LINK TO VIEW THE AUTHOR DETAILS  */}
         <Link href={`/author/${authorObj.firebaseKey}`} passHref>
           <Button variant="primary" className="m-2">
             VIEW
