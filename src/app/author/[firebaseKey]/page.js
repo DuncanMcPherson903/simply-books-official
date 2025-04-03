@@ -2,13 +2,18 @@
 
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import viewAuthorDetails from '@/api/mergedData';
+import { viewAuthorDetails } from '../../../api/mergedData';
+import BookCard from '../../../components/BookCard';
 
-export default function ViewBook({ params }) {
+export default function ViewAuthor({ params }) {
   const [authorDetails, setAuthorDetails] = useState({});
 
   // grab firebaseKey from url
   const { firebaseKey } = params;
+
+  const getAllAuthorBooks = () => {
+    viewAuthorDetails(firebaseKey).then(setAuthorDetails);
+  };
 
   // make call to API layer to get the data
   useEffect(() => {
@@ -16,24 +21,31 @@ export default function ViewBook({ params }) {
   }, [firebaseKey]);
 
   return (
-    <div className="mt-5 d-flex flex-wrap">
-      <div className="d-flex flex-column">
-        <img src={authorDetails.image} alt={authorDetails.title} style={{ width: '300px' }} />
+    <div>
+      <div className="mt-5 d-flex flex-wrap">
+        <div className="d-flex flex-column">
+          <img src={authorDetails.image} alt={' '} style={{ width: '300px' }} />
+        </div>
+        <div className="text-white ms-5 details">
+          <h5>
+            {authorDetails.first_name} {authorDetails.last_name}
+          </h5>
+          <p>Author Email: {authorDetails.email}</p>
+          <hr />
+        </div>
       </div>
-      <div className="text-white ms-5 details">
-        <h5>
-          {authorDetails.title} by {authorDetails.authorObject?.first_name} {authorDetails.authorObject?.last_name}
-          {authorDetails.authorObject?.favorite ? ' 🤍' : ''}
-        </h5>
-        Author Email: <a href={`mailto:${authorDetails.authorObject?.email}`}>{authorDetails.authorObject?.email}</a>
-        <p>{authorDetails.description || ''}</p>
-        <hr />
-        <p>{authorDetails.sale ? `🏷️ Sale $${authorDetails.price}` : `$${authorDetails.price}`}</p>
-      </div>
+      {authorDetails?.books && (
+        <div className="d-flex flex-wrap">
+          {/* TODO: map over books here using BookCard component */}
+          {authorDetails.books.map((book) => (
+            <BookCard key={book.firebaseKey} bookObj={book} onUpdate={getAllAuthorBooks} />
+          ))}
+        </div>
+      )}
     </div>
   );
 }
 
-ViewBook.propTypes = {
+ViewAuthor.propTypes = {
   params: PropTypes.objectOf({}).isRequired,
 };
