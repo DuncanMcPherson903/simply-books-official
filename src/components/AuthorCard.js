@@ -5,13 +5,24 @@ import PropTypes from 'prop-types';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Link from 'next/link';
-import { deleteSingleAuthor } from '../api/authorData';
+import { deleteSingleAuthor, getAuthorBooks } from '../api/authorData';
+import { deleteBook } from '../api/bookData';
 
 function AuthorCard({ authorObj, onUpdate }) {
+  const deleteAuthorBooks = (key) => {
+    getAuthorBooks(key).then((res) => {
+      console.log(res);
+      res.forEach((item) => {
+        deleteBook(item.firebaseKey);
+      });
+    });
+  };
+
   // FOR DELETE, WE NEED TO REMOVE THE AUTHOR AND HAVE THE VIEW RERENDER,
   // SO WE PASS THE FUNCTION FROM THE PARENT THAT GETS THE AUTHORS
   const deleteThisAuthor = () => {
     if (window.confirm(`Delete ${authorObj.first_name} ${authorObj.last_name}?`)) {
+      deleteAuthorBooks(authorObj.firebaseKey);
       deleteSingleAuthor(authorObj.firebaseKey).then(() => onUpdate());
     }
   };
