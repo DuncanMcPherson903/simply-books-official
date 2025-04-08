@@ -29,6 +29,10 @@ Authors and books are only visible to the user who added them.
 
 6. Continue to add authors and books as needed
 
+#### Loom Link:
+
+https://www.loom.com/share/8ae4529847fe412cbeadd596d71308cd?sid=aecf71ec-236e-4786-b5a5-601e8c5c2032
+
 #### Deployed Site:
 
 https://simplybooks-duncanmc.netlify.app/
