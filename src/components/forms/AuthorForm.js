@@ -52,7 +52,7 @@ function AuthorForm({ obj = initialState }) {
 
   return (
     <Form onSubmit={handleSubmit} className="text-black">
-      <h2 className="text-white mt-5">{obj.firebaseKey ? 'Update' : 'Create'} Book</h2>
+      <h2 className="text-white mt-5">{obj.firebaseKey ? 'Update' : 'Create'} Author</h2>
 
       {/* FIRST NAME INPUT  */}
       <FloatingLabel controlId="floatingInput1" label="First Name" className="mb-3">
