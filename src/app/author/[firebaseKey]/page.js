@@ -34,6 +34,10 @@ export default function ViewAuthor({ params }) {
           <hr />
         </div>
       </div>
+      <hr />
+      <h5>
+        Books by {authorDetails.first_name} {authorDetails.last_name}
+      </h5>
       {authorDetails?.books && (
         <div className="d-flex flex-wrap">
           {/* TODO: map over books here using BookCard component */}
